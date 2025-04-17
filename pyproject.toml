@@ -1,0 +1,32 @@
+[project]
+name = "rhita"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "dask>=2025.3.0",
+    "distributed>=2025.3.0",
+    "geopandas<1.0",
+    "geopy>=2.4.1",
+    "haversine>=2.9.0",
+    "netcdf4>=1.7.2",
+    "networkx>=3.4.2",
+    "numpy<2.0",
+    "pandas>=2.2.3",
+    "regionmask>=0.13.0",
+    "scipy>=1.15.2",
+    "xarray>=2025.3.1",
+]
+
+[project.scripts]
+rhita = "rhita:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]
