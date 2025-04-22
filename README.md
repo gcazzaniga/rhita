@@ -8,7 +8,7 @@ RHITA is a Python-based algorithm designed for the detection and tracking of haz
 1. Clone the repository:
    ```bash
    git clone https://github.com/gcazzaniga/rhita.git
-   cd RHITA
+   cd rhita
    ```
 
 2. Ensure you have Python 3.13 or higher installed. You can check your Python version with:
