@@ -11,6 +11,7 @@ import xarray as xr
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderServiceError
 from datetime import datetime, timedelta
+import time
 
 def get_country_old(latitude, longitude):
     try:
