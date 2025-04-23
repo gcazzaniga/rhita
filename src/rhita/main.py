@@ -45,8 +45,6 @@ def main(ds, ds_th, config):
             var_th = var_th - 273.15
 
     # 5. Binarization of the data
-    #compute_threshold = config['methods_parameters'].getboolean('compute_threshold')
-    #if compute_threshold:
     binary_map = hd.thresholding(var, var_th, time if config['methods_parameters']['threshold1'] == 'map_time_of_year' else None, time_th if config['methods_parameters']['threshold1'] == 'map_time_of_year' else None, config)
 
     # Compute the excess over the threshold
