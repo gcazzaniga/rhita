@@ -78,6 +78,13 @@ def import_map_th(config):
 def check_time(ds, config):
     if config['data_structure'].getboolean('nanoseconds'):
         datetime_format = [datetime.strptime(str(tt)[:-3], config['data_structure']['time_format_input']) for tt in ds[config['data_structure']['time']].values]
+    elif config['data_structure']['time_format_input'] == 'numeric_hours':
+        time_var = ds[config['data_structure']['time']]
+        datetime_format = num2date(
+            time_var[:],
+            units=time_var.units,  # 'hours since the reference'
+            calendar=time_var.calendar  # 'standard'
+        )
     else:
         datetime_format = [datetime.strptime(str(tt), config['data_structure']['time_format_input']) for tt in ds[config['data_structure']['time']].values]
     if config['data_structure']['temporal_resolution'] == '1 month':
@@ -97,10 +104,18 @@ def check_time(ds, config):
 def standard_time_format(ds, config):
     if config['data_structure'].getboolean('nanoseconds'):
         time_ISO = np.array([datetime.strptime(str(tt)[:-3], config['data_structure']['time_format_input']).strftime('%Y-%m-%dT%H-%M-%S') for tt in ds[config['data_structure']['time']].values])
+    elif config['data_structure']['time_format_input'] == 'numeric_hours':
+        time_var = ds[config['data_structure']['time']]
+        time_ISO = np.array(num2date(
+            time_var[:],
+            units=time_var.units,  # 'hours since the reference'
+            calendar=time_var.calendar  # 'standard'
+        ))
+        time_ISO = np.array([datetime.strptime(str(tt), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%dT%H-%M-%S') for tt in time_ISO])
     else:
         time_ISO = np.array([datetime.strptime(str(tt), config['data_structure']['time_format_input']).strftime('%Y-%m-%dT%H-%M-%S') for tt in ds[config['data_structure']['time']].values])
     return time_ISO
-    
+
 # Function for spatial subsetting of data
 @log_execution_time
 def spatial_subsetting(ds, config):
