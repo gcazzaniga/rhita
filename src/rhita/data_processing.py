@@ -54,8 +54,8 @@ def import_data(config, nc_files = None, data_dir = None):
 # Function for importing the threshold map (when available)
 @log_execution_time
 def import_map_th(config):
-    x_coord_name = config['data_structure']['x_coordinate']
-    y_coord_name = config['data_structure']['y_coordinate']
+    x_coord_name = config['data_structure']['x_coordinate_map']
+    y_coord_name = config['data_structure']['y_coordinate_map']
     ds_th = xr.open_dataset(config['methods_parameters']['map_path'])
     if config['methods_parameters']['threshold1'] == 'map':
         # transpose the data to have a standard format (lat, lon, other dimensions)
