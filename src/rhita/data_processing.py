@@ -153,7 +153,7 @@ def spatial_subsetting(ds, config):
         mask_interp = mask_interp.sel(lon=slice(lon_min, lon_max), lat=slice(lat_min, lat_max))
         ds_subset = ds.sel(lon=slice(lon_min, lon_max), lat=slice(lat_min, lat_max))
         ds_masked = ds_subset.copy()
-        ds_masked[config['data_structure']['variable_name']] = ds_masked[config['data_structure']['variable_name']].where(mask_interp[config['subsetting']['var_name_mask']] < 60)
+        ds_masked[config['data_structure']['variable_name_map']] = ds_masked[config['data_structure']['variable_name_map']].where(mask_interp[config['subsetting']['var_name_mask']] < 60)
         ds = ds_masked
     # subset data based on coordinates
     elif config['subsetting']['spatial_subset_method'] == 'coordinates':
