@@ -15,9 +15,9 @@ def main(ds, ds_th, config):
     # 3. Data subsetting
     # spatial subsetting
     if config['subsetting'].getboolean('spatial_subset'):
-        ds = dp.spatial_subsetting(ds, config)
+        ds = dp.spatial_subsetting(ds, config, "data")
     if config['methods_parameters']['threshold1'] == 'map' or config['methods_parameters']['threshold1'] == 'map_time_of_year':
-        ds_th = dp.spatial_subsetting(ds_th, config)
+        ds_th = dp.spatial_subsetting(ds_th, config, "threshold")
     # temporal subsetting
     ds = dp.temporal_subsetting(ds, config)
 

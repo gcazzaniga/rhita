@@ -8,6 +8,7 @@ import regionmask as rm
 import numpy as np
 import pandas as pd
 from datetime import datetime
+from netCDF4 import num2date  
 from rhita.utils import log_execution_time
 import time as time
 #import h5netcdf
@@ -118,7 +119,7 @@ def standard_time_format(ds, config):
 
 # Function for spatial subsetting of data
 @log_execution_time
-def spatial_subsetting(ds, config):
+def spatial_subsetting(ds, config, type_data = None):
 
     x_coord_name = config['data_structure']['x_coordinate']
     y_coord_name = config['data_structure']['y_coordinate']
@@ -153,7 +154,12 @@ def spatial_subsetting(ds, config):
         mask_interp = mask_interp.sel(lon=slice(lon_min, lon_max), lat=slice(lat_min, lat_max))
         ds_subset = ds.sel(lon=slice(lon_min, lon_max), lat=slice(lat_min, lat_max))
         ds_masked = ds_subset.copy()
-        ds_masked[config['data_structure']['variable_name_map']] = ds_masked[config['data_structure']['variable_name_map']].where(mask_interp[config['subsetting']['var_name_mask']] < 60)
+        if type_data == "data":
+            ds_masked[config['data_structure']['variable_name']] = ds_masked[config['data_structure']['variable_name']].where(mask_interp[config['subsetting']['var_name_mask']] < 60)
+        elif type_data == "threshold":
+            ds_masked[config['data_structure']['variable_name_map']] = ds_masked[config['data_structure']['variable_name_map']].where(mask_interp[config['subsetting']['var_name_mask']] < 60)
+        else:
+            ds_masked[config['data_structure']['variable_name']] = ds_masked[config['data_structure']['variable_name']].where(mask_interp[config['subsetting']['var_name_mask']] < 60)
         ds = ds_masked
     # subset data based on coordinates
     elif config['subsetting']['spatial_subset_method'] == 'coordinates':
