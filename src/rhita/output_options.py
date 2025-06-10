@@ -61,17 +61,6 @@ def get_country(latitude, longitude, retries=3, delay=1):
 
     return "Failed after retries"
 
-## Define a function to get the country name from latitude and longitude coordinates
-#def get_country1(latitude, longitude):
-#    # Initialize Nominatim API
-#    geolocator = Nominatim(user_agent="my_geocoder_app_v1")
-#    # Get location details and specify the language as English
-#    location = geolocator.reverse(f"{latitude}, {longitude}", language='en')
-#    # Extract address details
-#    address = location.raw['address']
-#    # Return the country name
-#    return address.get('country', 'Country not found')
-
 def create_catalogue(network, time, config):
 
     # initialize an empty list to store the data
@@ -176,6 +165,8 @@ def save_event_network(network, time, output_dir, update):
             'timestamp': list(nx.get_node_attributes(subg, "timestamp_from_start").values())
         }
         id = int(min(subg.nodes()))
+        # sort the event data by date
+        event_data = {k: [v[i] for i in sorted(range(len(event_data['date'])), key=lambda x: event_data['date'][x])] for k, v in event_data.items()}
         date_start = datetime.strptime(event_data['date'][0], "%Y-%m-%dT%H-%M-%S")
         date_end = datetime.strptime(event_data['date'][-1], "%Y-%m-%dT%H-%M-%S")
         formatted_date_start = date_start.strftime("%Y%m%d")
