@@ -20,3 +20,6 @@ tests/output/
 
 # Log files
 *.log
+
+# Slurm job files
+*.out
